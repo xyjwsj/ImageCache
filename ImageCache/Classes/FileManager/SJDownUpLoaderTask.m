@@ -71,13 +71,13 @@ typedef enum: NSInteger {
             if (!error) {
                 // 上传成功
                 if (_upLoadcompletedBlock) {
-                    _upLoadcompletedBlock(YES, data);
+                    _upLoadcompletedBlock(YES, nil);
                 }
             }else {
                 // 上传失败, 打印error信息
                 NSLog(@"error --- %@", error.localizedDescription);
                 if (_upLoadcompletedBlock) {
-                    _upLoadcompletedBlock(NO, data);
+                    _upLoadcompletedBlock(NO, nil);
                 }
             }  
         }];
@@ -106,7 +106,7 @@ typedef enum: NSInteger {
         NSDictionary * parmaterDict=[NSMutableDictionary dictionary];
         
         
-        request.HTTPBody =[self getHttpBodWithKeyData:[self getFileData:images key:@"file"] andParmaters:parmaterDict];
+        request.HTTPBody =[self getHttpBodWithKeyData:[self getFileData:images key:@"Filedata"] andParmaters:parmaterDict];
         
         _upLoadcompletedBlock = completedBlock;
         
@@ -139,7 +139,7 @@ typedef enum: NSInteger {
 }
 
 /**
- *  <#Description#>
+ *  Description
  *
  *  @param keyName   服务器需要识别的 获取文件的名称userfile[]
  *  @param filesDict 文件上传的字典 。key = 文件的名字，value =文件的路径
@@ -208,8 +208,6 @@ typedef enum: NSInteger {
         
         
     }];
-    
-    
     
     //加入尾部
     NSMutableString * footerString=[NSMutableString stringWithFormat:@"\r\n--%@--",KBoundary];

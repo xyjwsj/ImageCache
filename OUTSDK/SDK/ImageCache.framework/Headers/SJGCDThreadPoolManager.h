@@ -11,7 +11,7 @@
 
 @interface SJGCDThreadPoolManager : NSObject
 
-+ (instancetype)threadPool;
++ (instancetype)threadPoolWithNamespace:(NSString*)ns;
 
 /**
  *  未加入调度组，执行一个任务

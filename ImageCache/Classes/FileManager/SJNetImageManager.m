@@ -58,7 +58,7 @@ static NSString* namespaceStr = @"com.hoolai.access";
     SJThreadTask* task = [SJThreadTask defaultRunBlock:^{
         [downloadTask startTask];
     }];
-    [[SJGCDThreadPoolManager threadPoolWithNamespace:namespaceStr] executeTask:task];
+    [[SJGCDThreadPoolManager threadPool] executeTask:task];
     return task;
 }
 
@@ -79,13 +79,13 @@ static NSString* namespaceStr = @"com.hoolai.access";
     
     __block SJDownUpLoaderTask* uploadTask = [[SJDownUpLoaderTask alloc] initUploadURL:url images:images completedBlock:^(BOOL result, NSData *data) {
         if (completed) {
-            completed(result, nil);
+            completed(result, data);
         }
     }];
     SJThreadTask* task = [SJThreadTask defaultRunBlock:^{
         [uploadTask startTask];
     }];
-    [[SJGCDThreadPoolManager threadPoolWithNamespace:namespaceStr] executeTask:task];
+    [[SJGCDThreadPoolManager threadPool] executeTask:task];
     
 }
 

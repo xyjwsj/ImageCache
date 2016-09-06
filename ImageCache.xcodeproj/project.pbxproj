@@ -27,6 +27,10 @@
 		6BDC86FD1D7D6CF000CC7C37 /* SJGCDThreadPoolManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 6BDC86F11D7D6CF000CC7C37 /* SJGCDThreadPoolManager.m */; };
 		6BDC86FE1D7D6CF000CC7C37 /* SJThreadTask.m in Sources */ = {isa = PBXBuildFile; fileRef = 6BDC86F31D7D6CF000CC7C37 /* SJThreadTask.m */; };
 		6BDC86FF1D7D6CF000CC7C37 /* SJThreadTask.m in Sources */ = {isa = PBXBuildFile; fileRef = 6BDC86F31D7D6CF000CC7C37 /* SJThreadTask.m */; };
+		6BDC87071D7E543B00CC7C37 /* SJNetWorkManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 6BDC87061D7E543B00CC7C37 /* SJNetWorkManager.m */; };
+		6BDC87081D7E543B00CC7C37 /* SJNetWorkManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 6BDC87061D7E543B00CC7C37 /* SJNetWorkManager.m */; };
+		6BDC870B1D7E546200CC7C37 /* SJNetWorkTask.m in Sources */ = {isa = PBXBuildFile; fileRef = 6BDC870A1D7E546200CC7C37 /* SJNetWorkTask.m */; };
+		6BDC870C1D7E546200CC7C37 /* SJNetWorkTask.m in Sources */ = {isa = PBXBuildFile; fileRef = 6BDC870A1D7E546200CC7C37 /* SJNetWorkTask.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -68,6 +72,10 @@
 		6BDC86F11D7D6CF000CC7C37 /* SJGCDThreadPoolManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SJGCDThreadPoolManager.m; sourceTree = "<group>"; };
 		6BDC86F21D7D6CF000CC7C37 /* SJThreadTask.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SJThreadTask.h; sourceTree = "<group>"; };
 		6BDC86F31D7D6CF000CC7C37 /* SJThreadTask.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SJThreadTask.m; sourceTree = "<group>"; };
+		6BDC87051D7E543B00CC7C37 /* SJNetWorkManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SJNetWorkManager.h; sourceTree = "<group>"; };
+		6BDC87061D7E543B00CC7C37 /* SJNetWorkManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SJNetWorkManager.m; sourceTree = "<group>"; };
+		6BDC87091D7E546200CC7C37 /* SJNetWorkTask.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SJNetWorkTask.h; sourceTree = "<group>"; };
+		6BDC870A1D7E546200CC7C37 /* SJNetWorkTask.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SJNetWorkTask.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -144,6 +152,7 @@
 			isa = PBXGroup;
 			children = (
 				6BDC86E51D7D6CF000CC7C37 /* Categories */,
+				6BDC87001D7E53D800CC7C37 /* NetMangager */,
 				6BDC86E81D7D6CF000CC7C37 /* FileManager */,
 				6BDC86EF1D7D6CF000CC7C37 /* Thread */,
 			);
@@ -181,6 +190,17 @@
 				6BDC86F31D7D6CF000CC7C37 /* SJThreadTask.m */,
 			);
 			path = Thread;
+			sourceTree = "<group>";
+		};
+		6BDC87001D7E53D800CC7C37 /* NetMangager */ = {
+			isa = PBXGroup;
+			children = (
+				6BDC87051D7E543B00CC7C37 /* SJNetWorkManager.h */,
+				6BDC87061D7E543B00CC7C37 /* SJNetWorkManager.m */,
+				6BDC87091D7E546200CC7C37 /* SJNetWorkTask.h */,
+				6BDC870A1D7E546200CC7C37 /* SJNetWorkTask.m */,
+			);
+			path = NetMangager;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -226,6 +246,7 @@
 		6BDC86B51D7D6C5100CC7C37 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				CLASSPREFIX = SJ;
 				LastUpgradeCheck = 0730;
 				ORGANIZATIONNAME = wsj_proj;
 				TargetAttributes = {
@@ -281,6 +302,8 @@
 				6BDC86FC1D7D6CF000CC7C37 /* SJGCDThreadPoolManager.m in Sources */,
 				6BDC86F61D7D6CF000CC7C37 /* SJDownUpLoaderTask.m in Sources */,
 				6BDC86C51D7D6C5100CC7C37 /* AppDelegate.m in Sources */,
+				6BDC870B1D7E546200CC7C37 /* SJNetWorkTask.m in Sources */,
+				6BDC87071D7E543B00CC7C37 /* SJNetWorkManager.m in Sources */,
 				6BDC86C21D7D6C5100CC7C37 /* main.m in Sources */,
 				6BDC86F81D7D6CF000CC7C37 /* SJImageCache.m in Sources */,
 			);
@@ -293,10 +316,12 @@
 				6BDC86F71D7D6CF000CC7C37 /* SJDownUpLoaderTask.m in Sources */,
 				6BDC86F91D7D6CF000CC7C37 /* SJImageCache.m in Sources */,
 				6BDC86FF1D7D6CF000CC7C37 /* SJThreadTask.m in Sources */,
+				6BDC870C1D7E546200CC7C37 /* SJNetWorkTask.m in Sources */,
 				6BDC86FB1D7D6CF000CC7C37 /* SJNetImageManager.m in Sources */,
 				6BDC86E01D7D6CA600CC7C37 /* ImageCache.m in Sources */,
 				6BDC86F51D7D6CF000CC7C37 /* UIImageView+SJNetImage.m in Sources */,
 				6BDC86FD1D7D6CF000CC7C37 /* SJGCDThreadPoolManager.m in Sources */,
+				6BDC87081D7E543B00CC7C37 /* SJNetWorkManager.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

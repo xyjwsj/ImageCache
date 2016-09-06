@@ -10,6 +10,8 @@
 
 #define DISPATCH_GROUP_NUM 5
 
+static NSString* namespaceStr = @"com.hoolai.access";
+
 @interface SJGCDThreadPoolManager()
 
 @end
@@ -23,18 +25,18 @@
     
 }
 
-+ (instancetype)threadPoolWithNamespace:(NSString*)ns{
++ (instancetype)threadPool{
     static dispatch_once_t once;
     static SJGCDThreadPoolManager* instance;
     dispatch_once(&once, ^{
-        instance = [[SJGCDThreadPoolManager alloc] initWithNamespace:ns];
+        instance = [[SJGCDThreadPoolManager alloc] init];
     });
     return instance;
 }
 
-- (instancetype)initWithNamespace:(NSString*)ns {
+- (instancetype)init {
     if (self = [super init]) {
-        concurrentQueue = dispatch_queue_create([ns UTF8String], DISPATCH_QUEUE_CONCURRENT);
+        concurrentQueue = dispatch_queue_create([namespaceStr UTF8String], DISPATCH_QUEUE_CONCURRENT);
         for (int i = 0; i < sizeof(groups) / sizeof(groups[0]); i++) {
             groups[i] = dispatch_group_create();
             groupStatus[i] = 0;

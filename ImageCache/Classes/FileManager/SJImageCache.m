@@ -63,7 +63,7 @@
 #endif
     }
     
-    [[SJGCDThreadPoolManager threadPoolWithNamespace:_namespace] executeTask:[[SJThreadTask alloc] initWithRunBlock:^{
+    [[SJGCDThreadPoolManager threadPool] executeTask:[[SJThreadTask alloc] initWithRunBlock:^{
         _fileManager = [NSFileManager new];
     }]];
     
@@ -153,7 +153,7 @@
         if (!data) return;
         //后台线程缓存图片到物理存储上
         __block typeof(self) weakSelf = self;
-        [[SJGCDThreadPoolManager threadPoolWithNamespace:_namespace] executeTask:[SJThreadTask defaultRunBlock:^{
+        [[SJGCDThreadPoolManager threadPool] executeTask:[SJThreadTask defaultRunBlock:^{
             [weakSelf storeDataToDisk:data forKey:key];
         }]];
     }
