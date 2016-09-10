@@ -11,6 +11,8 @@
 #import "SJDownUpLoaderTask.h"
 #import "SJImageCache.h"
 #import "SJNetImageManager.h"
+#import "SJNetWorkManager.h"
+#import "SJNetWorkTask.h"
 #import "SJGCDThreadPoolManager.h"
 #import "SJThreadTask.h"
 #endif /* UISDK_h */

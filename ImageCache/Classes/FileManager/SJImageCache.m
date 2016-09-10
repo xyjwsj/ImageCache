@@ -206,14 +206,14 @@
     return image;
 }
 
-- (void)queryCacheForKey:(NSString *)key delegate:(id <SJImageCacheDelegate>)delegate {
+- (void)queryCacheForKey:(NSString *)key delegate:(void (^)(BOOL, NSString *, UIImage *))delegate {
     if (!delegate) {
         return;
     }
     
     if (!key) {
-        if ([delegate respondsToSelector:@selector(didNotFoundImageForKey:)]) {
-            [delegate didNotFoundImageForKey:key];
+        if (delegate) {
+            delegate(NO, key, nil);
         }
         return;
     }
@@ -223,8 +223,8 @@
     if (image)
     {
         // ...notify delegate immediately, no need to go async
-        if ([delegate respondsToSelector:@selector(didImageCache:)]) {
-            [delegate didImageCache:image];
+        if (delegate) {
+            delegate(YES, key, image);
         }
         return;
     }
@@ -235,16 +235,16 @@
 /*
  *查找物理缓存上的图片
  */
-- (void)queryDiskCacheWithKey:(NSString *)key delegate:(id <SJImageCacheDelegate>)delegate {
+- (void)queryDiskCacheWithKey:(NSString *)key delegate:(void (^)(BOOL, NSString *, UIImage *))delegate {
     
     UIImage *image = [[UIImage alloc] initWithContentsOfFile:[self cachePathForKey:key]];
     if (image) {
-        if ([delegate respondsToSelector:@selector(didImageCache:)]) {
-            [delegate didImageCache:image];
+        if (delegate) {
+            delegate(YES, key, image);
         }
     } else {
-        if ([delegate respondsToSelector:@selector(didNotFoundImageForKey:)]) {
-            [delegate didNotFoundImageForKey:key];
+        if (delegate) {
+            delegate(NO, key, nil);
         }
     }
 }

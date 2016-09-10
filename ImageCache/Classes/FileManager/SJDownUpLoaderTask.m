@@ -9,7 +9,7 @@
 #import "SJDownUpLoaderTask.h"
 #import "SJImageCache.h"
 
-static NSString* namespaceStr = @"com.hoolai.access";
+static NSString* component = @"access";
 
 typedef enum: NSInteger {
     DOWNLOAD_TASK = 0,
@@ -239,7 +239,7 @@ didFinishDownloadingToURL:(NSURL *)location
     // 将临时文件剪切或者复制Caches文件夹
     NSFileManager *mgr = [NSFileManager defaultManager];
     
-    NSString* path = [[SJImageCache sharedImageCacheComponent:namespaceStr] cachePathForKey:_urlStr];
+    NSString* path = [[SJImageCache sharedImageCacheComponent:component] cachePathForKey:_urlStr];
     // AtPath : 剪切前的文件路径
     // ToPath : 剪切后的文件路径
     [mgr moveItemAtPath:location.path toPath:path error:nil];

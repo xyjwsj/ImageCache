@@ -9,14 +9,6 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 
-@protocol SJImageCacheDelegate <NSObject>
-
-- (void)didNotFoundImageForKey:(NSString*)key;
-
-- (void)didImageCache:(UIImage*)image;
-
-@end
-
 @interface SJImageCache : NSObject
 @property (nonatomic, retain) NSMutableDictionary *memCache;//内存缓存图片引用
 @property (assign, nonatomic) NSInteger maxCacheAge;
@@ -74,7 +66,7 @@
  *  @param key      <#key description#>
  *  @param delegate <#delegate description#>
  */
-- (void)queryCacheForKey:(NSString *)key delegate:(id <SJImageCacheDelegate>)delegate;
+- (void)queryCacheForKey:(NSString *)key delegate:(void(^)(BOOL find, NSString* key, UIImage* image))delegate;
 
 //清除key索引的图片
 - (void)removeImageForKey:(NSString *)key;

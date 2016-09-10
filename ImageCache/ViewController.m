@@ -43,16 +43,25 @@
 - (void)testHttp {
     
     NSMutableDictionary* dic = [NSMutableDictionary dictionary];
-    [dic setObject:@(123) forKey:@"gameId"];
-    [dic setObject:@(123) forKey:@"hoolaiPassportId"];
-    [dic setObject:@"string" forKey:@"reason"];
-    [dic setObject:@(YES) forKey:@"resolved"];
+//    [dic setObject:@(123) forKey:@"gameId"];
+//    [dic setObject:@(123) forKey:@"hoolaiPassportId"];
+//    [dic setObject:@"string" forKey:@"reason"];
+//    [dic setObject:@(YES) forKey:@"resolved"];
+//    
+//    NSArray* array = [[NSArray alloc] initWithObjects:@"string", nil];
+//    
+//    [dic setObject:array forKey:@"pictureUrls"];
+//    
+//    [[SJNetWorkManager netWorkManager] httpPostURL:@"http://192.168.150.117:9000/api/open/test" dataType:JSON params:dic completion:^(BOOL result, NSDictionary *headers, NSData *data, NSError *error) {
+//        NSError* error1 = nil;
+//        id res = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&error1];
+//        NSLog(@"tst");
+//    }];
     
-    NSArray* array = [[NSArray alloc] initWithObjects:@"string", nil];
+    [dic setObject:@(23) forKey:@"gameId"];
+    [dic setObject:@(1234) forKey:@"hoolaiPassportId"];
     
-    [dic setObject:array forKey:@"pictureUrls"];
-    
-    [[SJNetWorkManager netWorkManager] httpPostURL:@"http://192.168.150.117:9000/api/open/test" dataType:JSON params:dic completion:^(BOOL result, NSDictionary *headers, NSData *data, NSError *error) {
+    [[SJNetWorkManager netWorkManager] httpPostURL:@"http://192.168.1.169:8080/api/open/tickets/list" dataType:JSON params:dic completion:^(BOOL result, NSDictionary *headers, NSData *data, NSError *error) {
         NSError* error1 = nil;
         id res = [NSJSONSerialization JSONObjectWithData:data options:kNilOptions error:&error1];
         NSLog(@"tst");

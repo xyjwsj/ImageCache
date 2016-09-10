@@ -10,6 +10,6 @@
 
 @interface UIImageView (SJNetImage)
 
--(void)setImageUrl:(NSString*)url placeholderImage:(NSString*)placeholderImage;
+-(void)setImageUrl:(NSString*)url placeholderImage:(UIImage*)placeholderImage;
 
 @end

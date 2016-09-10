@@ -10,8 +10,10 @@
 #import "SJGCDThreadPoolManager.h"
 #import "SJThreadTask.h"
 #import "SJDownUpLoaderTask.h"
+#import "SJImageCache.h"
 
 static NSString* namespaceStr = @"com.hoolai.access";
+static NSString* component = @"access";
 
 @implementation SJNetImageManager {
     NSMutableDictionary* dic;
@@ -38,16 +40,26 @@ static NSString* namespaceStr = @"com.hoolai.access";
     return  self;
 }
 
-- (void)imageWithURL:(NSString *)url placeholderImage:(NSString *)placeholderImage imageView:(UIImageView *)imageView {
-    [imageView setImage:[UIImage imageNamed:placeholderImage]];
-    [self showThreadTaskWithImageView:imageView url:url];
+- (void)imageWithURL:(NSString *)url placeholderImage:(UIImage *)placeholderImage imageView:(UIImageView *)imageView {
+    [imageView setImage:placeholderImage];
+    [self cacheQueryImageUrl:url imageView:imageView];
 }
 
 - (UIImageView *)imageWithURL:(NSString *)url placeholderImage:(NSString *)placeholderImage {
     UIImageView* imageView = [[UIImageView alloc] init];
     [imageView setImage:[UIImage imageNamed:placeholderImage]];
-    [self showThreadTaskWithImageView:imageView url:url];
+    [self cacheQueryImageUrl:url imageView:imageView];
     return imageView;
+}
+
+- (void)cacheQueryImageUrl:(NSString*)url imageView:(UIImageView *)imageView {
+    [[SJImageCache sharedImageCacheComponent:component] queryCacheForKey:url delegate:^(BOOL find, NSString *key, UIImage *image) {
+        if (!find) {
+            [self showThreadTaskWithImageView:imageView url:url];
+        } else {
+            [imageView setImage:image];
+        }
+    }];
 }
 
 - (SJThreadTask*)showThreadTaskWithImageView:(UIImageView*)imageView url:(NSString*)url{
@@ -141,3 +153,4 @@ static NSString* namespaceStr = @"com.hoolai.access";
 
 
 @end
+
