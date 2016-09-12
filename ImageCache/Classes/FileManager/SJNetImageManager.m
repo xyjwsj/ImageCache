@@ -19,6 +19,8 @@ static NSString* component = @"access";
     NSMutableDictionary* dic;
     NSMutableDictionary* dicStatus;
     NSMutableDictionary* dicData;
+    
+    NSMutableDictionary* downloadQueue;
 }
 
 + (instancetype)netImageManager {
@@ -36,6 +38,7 @@ static NSString* component = @"access";
         dic = [NSMutableDictionary dictionary];
         dicStatus = [NSMutableDictionary dictionary];
         dicData = [NSMutableDictionary dictionary];
+        downloadQueue = [NSMutableDictionary dictionary];
     }
     return  self;
 }
@@ -62,16 +65,52 @@ static NSString* component = @"access";
     }];
 }
 
-- (SJThreadTask*)showThreadTaskWithImageView:(UIImageView*)imageView url:(NSString*)url{
-    __block UIImageView* weakImageView = imageView;
+- (BOOL)addCacheDownloadQueueWithImageView:(UIImageView*)imageView url:(NSString*)url {
+    @synchronized (self) {
+        __block UIImageView* weakImageView = imageView;
+        if (downloadQueue.count < 1) {
+            NSMutableArray* array = [NSMutableArray arrayWithObjects:weakImageView, nil];
+            [downloadQueue setObject:array forKey:url];
+            return false;
+        }
+        NSArray* allKeys = downloadQueue.allKeys;
+        if (![allKeys containsObject:url]) {
+            NSMutableArray* array = [NSMutableArray arrayWithObjects:weakImageView, nil];
+            [downloadQueue setObject:array forKey:url];
+            return false;
+        }
+        NSMutableArray* cacheImageViews = [NSMutableArray arrayWithArray:[downloadQueue objectForKey:url]];
+        if (!cacheImageViews) {
+            cacheImageViews = [NSMutableArray array];
+        }
+        [cacheImageViews addObject:weakImageView];
+        [downloadQueue setObject:cacheImageViews forKey:url];
+        return true;
+    }
+}
+
+- (void)notifyImage:(UIImage*)image url:(NSString*)url {
+    @synchronized (self) {
+        NSArray* imageViews = [downloadQueue objectForKey:url];
+        for (UIImageView* imageView in imageViews) {
+            [imageView setImage:image];
+        }
+    }
+}
+
+- (void)showThreadTaskWithImageView:(UIImageView*)imageView url:(NSString*)url{
+    if ([self addCacheDownloadQueueWithImageView:imageView url:url]) {
+        return;
+    }
+    __block typeof(self) weakSelf = self;
     __block SJDownUpLoaderTask* downloadTask = [[SJDownUpLoaderTask alloc] initDownloadURL:url completedBlock:^(UIImage *image) {
-        [weakImageView setImage:image];
+//        [weakImageView setImage:image];
+        [weakSelf notifyImage:image url:url];
     }];
     SJThreadTask* task = [SJThreadTask defaultRunBlock:^{
         [downloadTask startTask];
     }];
     [[SJGCDThreadPoolManager threadPool] executeTask:task];
-    return task;
 }
 
 - (void)uploadWithURL:(NSString *)url images:(NSArray<UIImage *> *)images completed:(GroupUploadCompleted)completed {
