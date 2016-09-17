@@ -8,8 +8,12 @@
 
 #import <UIKit/UIKit.h>
 
+typedef void(^LoadCompletion)(BOOL result, UIImage* image);
+
 @interface UIImageView (SJNetImage)
 
--(void)setImageUrl:(NSString*)url placeholderImage:(UIImage*)placeholderImage;
+-(void)setImageUrl:(NSString*)url placeholderImage:(UIImage*)placeholderImage completion:(LoadCompletion)completion;
+
+- (void)blockImage:(UIImage*)image;
 
 @end

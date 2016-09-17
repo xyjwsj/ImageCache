@@ -11,6 +11,7 @@
 #import "SJThreadTask.h"
 #import "SJDownUpLoaderTask.h"
 #import "SJImageCache.h"
+#import "UIImageView+SJNetImage.h"
 
 static NSString* namespaceStr = @"com.hoolai.access";
 static NSString* component = @"access";
@@ -60,7 +61,8 @@ static NSString* component = @"access";
         if (!find) {
             [self showThreadTaskWithImageView:imageView url:url];
         } else {
-            [imageView setImage:image];
+//            [imageView setImage:image];
+            [imageView blockImage:image];
         }
     }];
 }
@@ -93,8 +95,10 @@ static NSString* component = @"access";
     @synchronized (self) {
         NSArray* imageViews = [downloadQueue objectForKey:url];
         for (UIImageView* imageView in imageViews) {
-            [imageView setImage:image];
+//            [imageView setImage:image];
+            [imageView blockImage:image];
         }
+        [downloadQueue removeObjectForKey:url];
     }
 }
 

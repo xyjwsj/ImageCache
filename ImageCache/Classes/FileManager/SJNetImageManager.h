@@ -16,7 +16,7 @@ typedef void(^GroupUploadCompleted)(BOOL result, NSData* data);
 
 + (instancetype)netImageManager;
 
-- (void)imageWithURL:(NSString*)url placeholderImage:(NSString*)placeholderImage imageView:(UIImageView*)imageView;
+- (void)imageWithURL:(NSString*)url placeholderImage:(UIImage*)placeholderImage imageView:(UIImageView*)imageView;
 
 - (UIImageView*)imageWithURL:(NSString*)url placeholderImage:(NSString*)placeholderImage;
 
