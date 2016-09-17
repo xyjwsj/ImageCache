@@ -25,10 +25,15 @@ typedef enum: NSInteger {
     NSString* _urlStr;
     SJImageDownloaderCompletedBlock _downLoadcompletedBlock;
     SJImageUploaderCompletedBlock _upLoadcompletedBlock;
+    SJImageLoadProgressBlock _loadProgressBlock;
     RequestType _type;
 }
 
 - (instancetype)initDownloadURL:(NSString *)url completedBlock:(SJImageDownloaderCompletedBlock)completedBlock {
+    return [self initDownloadURL:url progressBlock:nil completedBlock:completedBlock];
+}
+
+- (instancetype)initDownloadURL:(NSString *)url progressBlock:(SJImageLoadProgressBlock)progressBlock completedBlock:(SJImageDownloaderCompletedBlock)completedBlock {
     if (self = [super init]) {
         _urlStr = url;
         _type = DOWNLOAD_TASK;
@@ -37,6 +42,7 @@ typedef enum: NSInteger {
         _session = [NSURLSession sessionWithConfiguration:config delegate:self delegateQueue:[NSOperationQueue mainQueue]];
         NSURL *downloadURL = [NSURL URLWithString:url];
         _downLoadTask = [_session downloadTaskWithURL:downloadURL];
+        _loadProgressBlock = progressBlock;
     }
     return  self;
 }
@@ -253,7 +259,12 @@ didFinishDownloadingToURL:(NSURL *)location
  totalBytesWritten:(int64_t)totalBytesWritten
 totalBytesExpectedToWrite:(int64_t)totalBytesExpectedToWrite
 {
-    NSLog(@"获得下载进度--%@", [NSThread currentThread]);
+//    NSLog(@"获得下载进度--%@", [NSThread currentThread]);
+    if (_loadProgressBlock) {
+        NSString* currentStr = [NSString stringWithFormat:@"%lld", totalBytesWritten];
+        NSString* totalStr = [NSString stringWithFormat:@"%lld", totalBytesExpectedToWrite];
+        _loadProgressBlock(totalBytesWritten, totalBytesExpectedToWrite, [currentStr longLongValue]*1.0/[totalStr longLongValue]);
+    }
 
 }
 

@@ -11,10 +11,13 @@
 
 typedef void(^SJImageDownloaderCompletedBlock)(UIImage *image);
 typedef void(^SJImageUploaderCompletedBlock)(BOOL result, NSData* data);
+typedef void(^SJImageLoadProgressBlock)(int64_t current, int64_t total, float progress);
 
 @interface SJDownUpLoaderTask : NSObject<NSURLSessionDownloadDelegate, NSURLSessionDataDelegate>
 
 - (instancetype)initDownloadURL:(NSString*)url completedBlock:(SJImageDownloaderCompletedBlock)completedBlock;
+
+- (instancetype)initDownloadURL:(NSString*)url progressBlock:(SJImageLoadProgressBlock)progressBlock completedBlock:(SJImageDownloaderCompletedBlock)completedBlock;
 
 - (instancetype)initUploadURL:(NSString*)url image:(NSData*)image completedBlock:(SJImageUploaderCompletedBlock)completedBlock;
 

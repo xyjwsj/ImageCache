@@ -46,20 +46,26 @@ static NSString* component = @"access";
 
 - (void)imageWithURL:(NSString *)url placeholderImage:(UIImage *)placeholderImage imageView:(UIImageView *)imageView {
     [imageView setImage:placeholderImage];
-    [self cacheQueryImageUrl:url imageView:imageView];
+    [self cacheQueryImageUrl:url imageView:imageView progressBlock:nil];
 }
+
+- (void)imageWithURL:(NSString *)url placeholderImage:(UIImage *)placeholderImage imageView:(UIImageView *)imageView progressBlock:(NetImageProgressBlock)progressBlock {
+    [imageView setImage:placeholderImage];
+    [self cacheQueryImageUrl:url imageView:imageView progressBlock:progressBlock];
+}
+
 
 - (UIImageView *)imageWithURL:(NSString *)url placeholderImage:(NSString *)placeholderImage {
     UIImageView* imageView = [[UIImageView alloc] init];
     [imageView setImage:[UIImage imageNamed:placeholderImage]];
-    [self cacheQueryImageUrl:url imageView:imageView];
+    [self cacheQueryImageUrl:url imageView:imageView progressBlock:nil];
     return imageView;
 }
 
-- (void)cacheQueryImageUrl:(NSString*)url imageView:(UIImageView *)imageView {
+- (void)cacheQueryImageUrl:(NSString*)url imageView:(UIImageView *)imageView progressBlock:(NetImageProgressBlock)progressBlock{
     [[SJImageCache sharedImageCacheComponent:component] queryCacheForKey:url delegate:^(BOOL find, NSString *key, UIImage *image) {
         if (!find) {
-            [self showThreadTaskWithImageView:imageView url:url];
+            [self showThreadTaskWithImageView:imageView url:url processBlock:progressBlock];
         } else {
 //            [imageView setImage:image];
             [imageView blockImage:image];
@@ -102,13 +108,12 @@ static NSString* component = @"access";
     }
 }
 
-- (void)showThreadTaskWithImageView:(UIImageView*)imageView url:(NSString*)url{
+- (void)showThreadTaskWithImageView:(UIImageView*)imageView url:(NSString*)url processBlock:(NetImageProgressBlock)progressBlocks{
     if ([self addCacheDownloadQueueWithImageView:imageView url:url]) {
         return;
     }
     __block typeof(self) weakSelf = self;
-    __block SJDownUpLoaderTask* downloadTask = [[SJDownUpLoaderTask alloc] initDownloadURL:url completedBlock:^(UIImage *image) {
-//        [weakImageView setImage:image];
+    __block SJDownUpLoaderTask* downloadTask = [[SJDownUpLoaderTask alloc] initDownloadURL:url progressBlock:progressBlocks completedBlock:^(UIImage *image) {
         [weakSelf notifyImage:image url:url];
     }];
     SJThreadTask* task = [SJThreadTask defaultRunBlock:^{
