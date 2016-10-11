@@ -26,7 +26,7 @@ NSString* const imageProgressKeyBlock = @"imageProgressKeyBlock";
 }
 
 - (void)blockImage:(UIImage *)image {
-    [self setImage:image];
+    [self setImage:image isFill:YES];
     if (objc_getAssociatedObject(self, &imageCompletionKeyBlock)) {
         LoadCompletion blockCompletion = (LoadCompletion)objc_getAssociatedObject(self, &imageCompletionKeyBlock);
         if (image) {
@@ -36,6 +36,20 @@ NSString* const imageProgressKeyBlock = @"imageProgressKeyBlock";
         }
     }
     
+}
+
+- (void)setImage:(UIImage *)image isFill:(BOOL)isFill {
+    if (!isFill) {
+        [self setImage:image];
+        return;
+    } else {
+        CGSize newSize=self.frame.size;
+        UIGraphicsBeginImageContextWithOptions(newSize, NO, 0.0);
+        [image drawInRect:CGRectMake(0, 0, newSize.width, newSize.height)];
+        UIImage * newImage = UIGraphicsGetImageFromCurrentImageContext();
+        UIGraphicsEndImageContext();
+        [self setImage:newImage];
+    }
 }
 
 @end

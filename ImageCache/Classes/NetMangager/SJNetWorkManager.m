@@ -53,6 +53,19 @@
     [self httpRequestURL:url httpType:GET dataType:_dataType params:params headers:headers completion:completion];
 }
 
+#pragma default http put
+
+- (void)httpPutURL:(NSString *)url completion:(HTTPCompletion)completion {
+    [self httpPutURL:url dataType:_dataType params:nil headers:nil completion:completion];
+}
+
+- (void)httpPutURL:(NSString *)url params:(NSDictionary *)params completion:(HTTPCompletion)completion {
+    [self httpPutURL:url dataType:_dataType params:params headers:nil completion:completion];
+}
+
+- (void)httpPutURL:(NSString *)url params:(NSDictionary *)params headers:(NSDictionary *)headers completion:(HTTPCompletion)completion {
+    [self httpRequestURL:url httpType:GET dataType:_dataType params:params headers:headers completion:completion];
+}
 
 #pragma default post http
 
@@ -79,6 +92,20 @@
     [self httpRequestURL:url httpType:GET dataType:dataType params:params headers:headers completion:completion];
 }
 
+//////
+#pragma put http
+
+- (void)httpPutURL:(NSString *)url dataType:(DATA_TYPE)dataType completion:(HTTPCompletion)completion {
+    [self httpPutURL:url dataType:dataType params:nil headers:nil completion:completion];
+}
+
+- (void)httpPutURL:(NSString *)url dataType:(DATA_TYPE)dataType params:(NSDictionary *)params completion:(HTTPCompletion)completion {
+    [self httpPutURL:url dataType:dataType params:params headers:nil completion:completion];
+}
+
+- (void)httpPutURL:(NSString *)url dataType:(DATA_TYPE)dataType params:(NSDictionary *)params headers:(NSDictionary *)headers completion:(HTTPCompletion)completion {
+    [self httpRequestURL:url httpType:PUT dataType:dataType params:params headers:headers completion:completion];
+}
 
 #pragma post http
 

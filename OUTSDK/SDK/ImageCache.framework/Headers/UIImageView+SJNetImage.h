@@ -20,4 +20,6 @@ typedef void(^LoadProgress)(int64_t current, int64_t total, float progress);
 
 - (void)blockImage:(UIImage*)image;
 
+- (void)setImage:(UIImage *)image isFill:(BOOL)isFill;
+
 @end

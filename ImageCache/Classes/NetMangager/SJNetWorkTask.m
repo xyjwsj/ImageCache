@@ -33,6 +33,8 @@
     //设置请求方式 GET
     if (httpType == GET) {
         request.HTTPMethod = @"GET";
+    } else if (httpType == PUT) {
+        request.HTTPMethod = @"PUT";
     } else {
         request.HTTPMethod = @"POST";
     }
@@ -69,12 +71,15 @@
         //获取网络连接的状态码
         //  200 成功  404 网页未找到
         NSLog(@"状态码:%li", httpResponse.statusCode);
-        if (httpResponse.statusCode == 200) {
-            NSLog(@"请求成功");
-            completedBlock(YES, httpResponse.allHeaderFields, data, nil);
-        } else {
-            completedBlock(NO, nil, nil, error);
-        }
+        dispatch_sync(dispatch_get_main_queue(), ^{
+            //Update UI in UI thread here
+            if (httpResponse.statusCode >= 200 || httpResponse.statusCode < 300) {
+                NSLog(@"请求成功");
+                completedBlock(YES, httpResponse.allHeaderFields, data, nil);
+            } else {
+                completedBlock(NO, nil, nil, error);
+            }
+        });
         
     }];
     return self;

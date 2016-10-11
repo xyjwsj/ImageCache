@@ -34,8 +34,8 @@
 /**
  *  保存图片
  *
- *  @param image <#image description#>
- *  @param key   <#key description#>
+ *  @param image image description
+ *  @param key   key description
  */
 - (void)storeImage:(UIImage *)image forKey:(NSString *)key;
 
@@ -61,10 +61,10 @@
 - (void)storeImage:(UIImage *)image imageData:(NSData *)data forKey:(NSString *)key toDisk:(BOOL)toDisk;
 
 /**
- *  <#Description#>
+ *  Description
  *
- *  @param key      <#key description#>
- *  @param delegate <#delegate description#>
+ *  @param key      key description
+ *  @param delegate delegate description
  */
 - (void)queryCacheForKey:(NSString *)key delegate:(void(^)(BOOL find, NSString* key, UIImage* image))delegate;
 

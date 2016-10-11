@@ -10,7 +10,8 @@
 
 typedef enum: NSInteger{
     POST = 0,
-    GET
+    GET,
+    PUT
 }HTTP_TYPE;
 
 typedef enum: NSInteger {

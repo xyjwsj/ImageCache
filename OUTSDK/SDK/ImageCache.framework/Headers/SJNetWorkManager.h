@@ -35,6 +35,12 @@
 
 - (void)httpGetURL:(NSString*)url params:(NSDictionary*)params headers:(NSDictionary*)headers completion:(HTTPCompletion)completion;
 
+- (void)httpPutURL:(NSString*)url completion:(HTTPCompletion)completion;
+
+- (void)httpPutURL:(NSString*)url params:(NSDictionary*)params completion:(HTTPCompletion)completion;
+
+- (void)httpPutURL:(NSString*)url params:(NSDictionary*)params headers:(NSDictionary*)headers completion:(HTTPCompletion)completion;
+
 - (void)httpPostURL:(NSString*)url params:(NSDictionary*)params completion:(HTTPCompletion)completion;
 
 - (void)httpPostURL:(NSString*)url params:(NSDictionary*)params headers:(NSDictionary*)headers completion:(HTTPCompletion)completion;

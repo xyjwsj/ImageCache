@@ -45,19 +45,20 @@ static NSString* component = @"access";
 }
 
 - (void)imageWithURL:(NSString *)url placeholderImage:(UIImage *)placeholderImage imageView:(UIImageView *)imageView {
-    [imageView setImage:placeholderImage];
+    [imageView setImage:placeholderImage isFill:YES];
     [self cacheQueryImageUrl:url imageView:imageView progressBlock:nil];
 }
 
 - (void)imageWithURL:(NSString *)url placeholderImage:(UIImage *)placeholderImage imageView:(UIImageView *)imageView progressBlock:(NetImageProgressBlock)progressBlock {
-    [imageView setImage:placeholderImage];
+//    [imageView setImage:placeholderImage];
+    [imageView setImage:placeholderImage isFill:YES];
     [self cacheQueryImageUrl:url imageView:imageView progressBlock:progressBlock];
 }
 
 
 - (UIImageView *)imageWithURL:(NSString *)url placeholderImage:(NSString *)placeholderImage {
     UIImageView* imageView = [[UIImageView alloc] init];
-    [imageView setImage:[UIImage imageNamed:placeholderImage]];
+    [imageView setImage:[UIImage imageNamed:placeholderImage] isFill:YES];
     [self cacheQueryImageUrl:url imageView:imageView progressBlock:nil];
     return imageView;
 }
@@ -136,6 +137,13 @@ static NSString* component = @"access";
 //            
 //        }];
 //    }
+    
+    if (images.count <= 0) {
+        if (completed) {
+            completed(YES, nil);
+        }
+        return;
+    }
     
     __block SJDownUpLoaderTask* uploadTask = [[SJDownUpLoaderTask alloc] initUploadURL:url images:images completedBlock:^(BOOL result, NSData *data) {
         if (completed) {
